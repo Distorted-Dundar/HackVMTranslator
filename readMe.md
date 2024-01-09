@@ -7,10 +7,10 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-An assembler (A program that translates Assembly programs to binary executable).
-More specifically this is a project to translate hack assembly (Nand2Tetris assembly)
-that is executed on a custom-made virtual Computer (The hack Computer). 
-See [N2T part 1](https://www.nand2tetris.org)
+The HackVMTranslator generates assembly code according to VM commands.
+This project is meant to gain a higher understanding of the two tier compilation.
+After code is generated, it is executed on a custom-made virtual Computer (The hack Computer). 
+See [N2T part 1](https://www.nand2tetris.org). Testing is done to ensure that the code is complete.
 
 ### Built With / Tools Used
 
