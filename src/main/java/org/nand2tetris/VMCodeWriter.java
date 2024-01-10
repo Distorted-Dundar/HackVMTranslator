@@ -3,15 +3,15 @@ package org.nand2tetris;
 public interface VMCodeWriter {
 
     /**
-     * Writes to the output file the assembly code that implements
+     * Returns assembly commands that realize
      * the given arithmetic logical command.
      */
-    void writeArithmetic(String command);
+    String writeArithmetic(String command);
 
     /**
-     * Writes to the output file the assembly code that implements the given
+     * Returns assembly commands that realize the given
      * push or pop command
      */
-    void writePushPop(Command cmdType, String segment, int index);
+    String writePushPop(Command cmdType, String segment, int index);
 
 }
