@@ -95,6 +95,33 @@ class HackVMParserTest {
     }
 
     @Test
+    void commandType_C_POP_currentCommandIsAPushSegment() {
+        Mockito.when(hackVMParser.getCurrentCommand()).thenReturn("pop local 0");
+        assertEquals(hackVMParser.commandType(), C_POP, "RAM[(LCL_Base_address + 0)] <- RAM[SP--]");
+
+        Mockito.when(hackVMParser.getCurrentCommand()).thenReturn("pop that 5");
+        assertEquals(hackVMParser.commandType(), C_POP, "RAM[(THAT_Base_address + 5)] <- RAM[SP--]");
+
+        Mockito.when(hackVMParser.getCurrentCommand()).thenReturn("pop argument 1");
+        assertEquals(hackVMParser.commandType(), C_POP, "RAM[(ARG_Base_address + 1)] <- RAM[SP--]");
+
+        Mockito.when(hackVMParser.getCurrentCommand()).thenReturn("pop this 6");
+        assertEquals(hackVMParser.commandType(), C_POP, "RAM[(THIS_Base_address + 6)] <- RAM[SP--]");
+
+        Mockito.when(hackVMParser.getCurrentCommand()).thenReturn("pop temp 6");
+        assertEquals(hackVMParser.commandType(), C_POP, "RAM[(TEMP_Base_address + 6)] <- RAM[SP--]");
+
+        Mockito.when(hackVMParser.getCurrentCommand()).thenReturn("pop static 3");
+        assertEquals(hackVMParser.commandType(), C_POP, "RAM[16+3] <- RAM[SP--]");
+
+        Mockito.when(hackVMParser.getCurrentCommand()).thenReturn("pop pointer 0");
+        assertEquals(hackVMParser.commandType(), C_POP, "THIS: RAM[RAM[PTR+0]] <- RAM[SP--]");
+
+        Mockito.when(hackVMParser.getCurrentCommand()).thenReturn("pop pointer 1");
+        assertEquals(hackVMParser.commandType(), C_POP, "THIS: RAM[RAM[PTR+1]] <- RAM[SP--]");
+    }
+
+    @Test
     void arg1() {
     }
 

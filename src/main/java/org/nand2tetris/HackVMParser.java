@@ -70,10 +70,15 @@ public class HackVMParser implements VMParser {
     public Command commandType() {
         String cmd = getCurrentCommand();
         if(cmd.matches("(.*)(local|that|this|argument|temp|static|pointer)(.*)")){
-            if(cmd.contains("push")) return C_PUSH;
+            if(cmd.contains("push"))
+                return C_PUSH;
+            else
+                return C_POP;
         }
-        else if (cmd.contains("constant")) return CONSTANT;
-        else if (cmd.matches("add|sub|neg|eq|gt|lt|and|or|not")) return C_ARITHMETIC;
+        else if (cmd.contains("constant"))
+            return CONSTANT;
+        else if (cmd.matches("add|sub|neg|eq|gt|lt|and|or|not"))
+            return C_ARITHMETIC;
 
         return null;
     }
