@@ -25,6 +25,8 @@ See [N2T part 1](https://www.nand2tetris.org). Testing is done to ensure that th
 - Making Code readable (applying Clean Code advice)
 - Applying Regex's
 - Code Generation
+- Test Driven Development
+- Mockito for Mocking Objects
 
 <!-- GETTING STARTED -->
 ## Getting Started

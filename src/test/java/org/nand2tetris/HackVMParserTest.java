@@ -16,7 +16,7 @@ import static org.nand2tetris.Command.*;
  * Testing naming Convention is as follows<br><br>
  * MethodName_ExpectedBehavior_underState() <br>
  * <b>
- * In other words the MethodName returns or executes the ExpectedBehavior
+ * In other words the MethodName() returns or executes the ExpectedBehavior
  *  when its underState (which is the mockedBehavior)
  * </b>
  */
@@ -28,11 +28,9 @@ class HackVMParserTest {
         hackVMParser = Mockito.mock(HackVMParser.class, Mockito.CALLS_REAL_METHODS);
     }
 
-    //    MethodName_ExpectedBehavior_StateUnderTest
-    //cons: should be renamed if method change name
-    //example: isAdult_False_AgeLessThan18
+
     @Test
-    void commandType_CommandCONSTANT_currentCommandIsPushConstant() {
+    void commandType_CONSTANT_currentCommandIsPushConstant() {
         Mockito.when(hackVMParser.getCurrentCommand()).thenReturn("push constant 10");
         assertEquals(hackVMParser.commandType(), CONSTANT, "Push 10 is a constant operation");
 
@@ -41,7 +39,7 @@ class HackVMParserTest {
     }
 
     @Test
-    void commandType_CommandArithmetic_currentCommandIsArithmeticOrLogical() {
+    void commandType_C_ARITHMETIC_currentCommandIsArithmeticOrLogical() {
         Mockito.when(hackVMParser.getCurrentCommand()).thenReturn("add");
         assertEquals(hackVMParser.commandType(), C_ARITHMETIC, "add is Arithmetic");
 
@@ -68,6 +66,32 @@ class HackVMParserTest {
 
         Mockito.when(hackVMParser.getCurrentCommand()).thenReturn("not");
         assertEquals(hackVMParser.commandType(), C_ARITHMETIC, "logical not is Arithmetic (Logical)");
+    }
+    @Test
+    void commandType_C_PUSH_currentCommandIsAPushSegment() {
+        Mockito.when(hackVMParser.getCurrentCommand()).thenReturn("push local 0");
+        assertEquals(hackVMParser.commandType(), C_PUSH, "push *(LCL_Base_address + 0)");
+
+        Mockito.when(hackVMParser.getCurrentCommand()).thenReturn("push that 5");
+        assertEquals(hackVMParser.commandType(), C_PUSH, "push *(THAT_Base_address + 5)");
+
+        Mockito.when(hackVMParser.getCurrentCommand()).thenReturn("push argument 1");
+        assertEquals(hackVMParser.commandType(), C_PUSH, "push *(ARG_Base_address + 1)");
+
+        Mockito.when(hackVMParser.getCurrentCommand()).thenReturn("push this 6");
+        assertEquals(hackVMParser.commandType(), C_PUSH, "push *(THIS_Base_address + 6)");
+
+        Mockito.when(hackVMParser.getCurrentCommand()).thenReturn("push temp 6");
+        assertEquals(hackVMParser.commandType(), C_PUSH, "push *(TEMP_Base_address + 6)");
+
+        Mockito.when(hackVMParser.getCurrentCommand()).thenReturn("push static 3");
+        assertEquals(hackVMParser.commandType(), C_PUSH, "push a static variable from 16-255, therefore is at 16+3");
+
+        Mockito.when(hackVMParser.getCurrentCommand()).thenReturn("push pointer 0");
+        assertEquals(hackVMParser.commandType(), C_PUSH, "push the virtual segment to access the THIS (0) pointer");
+
+        Mockito.when(hackVMParser.getCurrentCommand()).thenReturn("push pointer 1");
+        assertEquals(hackVMParser.commandType(), C_PUSH, "push the virtual segment to access the That (1) pointer");
     }
 
     @Test
