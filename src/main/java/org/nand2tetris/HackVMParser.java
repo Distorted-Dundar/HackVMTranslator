@@ -85,6 +85,14 @@ public class HackVMParser implements VMParser {
 
     @Override
     public String arg1() {
+        switch (commandType()){
+            case C_ARITHMETIC -> {
+                return getCurrentCommand().strip();
+            }
+            case C_RETURN -> {
+                throw new UnsupportedOperationException("Cant capture first argument of C_RETURN command Type");
+            }
+        }
         return null;
     }
 

@@ -28,7 +28,6 @@ class HackVMParserTest {
         hackVMParser = Mockito.mock(HackVMParser.class, Mockito.CALLS_REAL_METHODS);
     }
 
-
     @Test
     void commandType_CONSTANT_currentCommandIsPushConstant() {
         Mockito.when(hackVMParser.getCurrentCommand()).thenReturn("push constant 10");
@@ -40,6 +39,7 @@ class HackVMParserTest {
 
     @Test
     void commandType_C_ARITHMETIC_currentCommandIsArithmeticOrLogical() {
+//        Pure arithmetic commands are twos complement
         Mockito.when(hackVMParser.getCurrentCommand()).thenReturn("add");
         assertEquals(hackVMParser.commandType(), C_ARITHMETIC, "add is Arithmetic");
 
@@ -118,11 +118,37 @@ class HackVMParserTest {
         assertEquals(hackVMParser.commandType(), C_POP, "THIS: RAM[RAM[PTR+0]] <- RAM[SP--]");
 
         Mockito.when(hackVMParser.getCurrentCommand()).thenReturn("pop pointer 1");
-        assertEquals(hackVMParser.commandType(), C_POP, "THIS: RAM[RAM[PTR+1]] <- RAM[SP--]");
+        assertEquals(hackVMParser.commandType(), C_POP, "THAT: RAM[RAM[PTR+1]] <- RAM[SP--]");
     }
 
     @Test
-    void arg1() {
+    void arg1_ArithmeticOperation_commandTypeC_ARITHMETIC() {
+        Mockito.when(hackVMParser.getCurrentCommand()).thenReturn("add");
+        assertEquals(hackVMParser.arg1(), "add", "returns first arg of add");
+
+        Mockito.when(hackVMParser.getCurrentCommand()).thenReturn("sub");
+        assertEquals(hackVMParser.arg1(), "sub", "returns first arg of sub");
+
+        Mockito.when(hackVMParser.getCurrentCommand()).thenReturn("neg");
+        assertEquals(hackVMParser.arg1(), "neg", "returns first arg of neg");
+
+        Mockito.when(hackVMParser.getCurrentCommand()).thenReturn("eq");
+        assertEquals(hackVMParser.arg1(), "eq", "returns first arg of eq");
+
+        Mockito.when(hackVMParser.getCurrentCommand()).thenReturn("gt");
+        assertEquals(hackVMParser.arg1(), "gt", "returns first arg of gt");
+
+        Mockito.when(hackVMParser.getCurrentCommand()).thenReturn("lt");
+        assertEquals(hackVMParser.arg1(), "lt", "returns first arg of lt");
+
+        Mockito.when(hackVMParser.getCurrentCommand()).thenReturn("and");
+        assertEquals(hackVMParser.arg1(), "and", "returns first arg of and");
+
+        Mockito.when(hackVMParser.getCurrentCommand()).thenReturn("or");
+        assertEquals(hackVMParser.arg1(), "or", "returns first arg of or");
+
+        Mockito.when(hackVMParser.getCurrentCommand()).thenReturn("not");
+        assertEquals(hackVMParser.arg1(), "not", "returns first arg of not");
     }
 
     @Test
