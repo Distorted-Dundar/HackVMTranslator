@@ -17,14 +17,14 @@ import static org.nand2tetris.Command.*;
  * MethodName_ExpectedBehavior_underState() <br>
  * <b>
  * In other words the MethodName() returns or executes the ExpectedBehavior
- *  when its underState (which is the mockedBehavior)
+ * when its underState (which is the mockedBehavior)
  * </b>
  */
 class HackVMParserTest {
     static HackVMParser hackVMParser;
 
     @BeforeAll
-    public static void setUpBeforeClass(){
+    public static void setUpBeforeClass() {
         hackVMParser = Mockito.mock(HackVMParser.class, Mockito.CALLS_REAL_METHODS);
     }
 
@@ -67,6 +67,7 @@ class HackVMParserTest {
         Mockito.when(hackVMParser.getCurrentCommand()).thenReturn("not");
         assertEquals(hackVMParser.commandType(), C_ARITHMETIC, "logical not is Arithmetic (Logical)");
     }
+
     @Test
     void commandType_C_PUSH_currentCommandIsAPushSegment() {
         Mockito.when(hackVMParser.getCurrentCommand()).thenReturn("push local 0");
@@ -189,8 +190,51 @@ class HackVMParserTest {
         Mockito.when(hackVMParser.getCurrentCommand()).thenReturn("pop pointer 0");
         assertEquals(hackVMParser.arg1(), "pointer", "first arg is pointer second is 0");
     }
+
     @Test
-    void arg2() {
+    void arg1_ThrowsException_commandTypeC_RETURN() {
+        Mockito.when(hackVMParser.getCurrentCommand()).thenReturn("NULL");
+
+        Mockito.when(hackVMParser.commandType()).thenReturn(C_RETURN);
+        assertThrows(UnsupportedOperationException.class, () -> hackVMParser.arg1(), "arg1() should not be called on a commandType of C_RETURN");
+    }
+
+    @Test
+    void arg2_offsetAddress_commandTypeC_PushOrC_POP(){
+        Mockito.when(hackVMParser.getCurrentCommand()).thenReturn("push local 0");
+        assertEquals(hackVMParser.arg2(), "0", "first is local second arg  is 0");
+        Mockito.when(hackVMParser.getCurrentCommand()).thenReturn("pop local 0");
+        assertEquals(hackVMParser.arg2(), "0", "first is local second arg  is 0");
+
+        Mockito.when(hackVMParser.getCurrentCommand()).thenReturn("push that 5");
+        assertEquals(hackVMParser.arg2(), "5", "first is that second arg is 5");
+        Mockito.when(hackVMParser.getCurrentCommand()).thenReturn("pop that 5");
+        assertEquals(hackVMParser.arg2(), "5", "first is that second arg is 5");
+
+        Mockito.when(hackVMParser.getCurrentCommand()).thenReturn("push argument 1");
+        assertEquals(hackVMParser.arg2(), "1", "first is argument second arg ond is 1");
+        Mockito.when(hackVMParser.getCurrentCommand()).thenReturn("pop argument 1");
+        assertEquals(hackVMParser.arg2(), "1", "first is argument second arg ond is 1");
+
+        Mockito.when(hackVMParser.getCurrentCommand()).thenReturn("push this 6");
+        assertEquals(hackVMParser.arg2(), "6", "first is this second arg is 6");
+        Mockito.when(hackVMParser.getCurrentCommand()).thenReturn("pop this 6");
+        assertEquals(hackVMParser.arg2(), "6", "first is this second arg is 6");
+
+        Mockito.when(hackVMParser.getCurrentCommand()).thenReturn("push temp 6");
+        assertEquals(hackVMParser.arg2(), "6", "first is temp second arg is 6");
+        Mockito.when(hackVMParser.getCurrentCommand()).thenReturn("pop temp 6");
+        assertEquals(hackVMParser.arg2(), "6", "first is temp second arg is 6");
+
+        Mockito.when(hackVMParser.getCurrentCommand()).thenReturn("push static 3");
+        assertEquals(hackVMParser.arg2(), "3", "first is static second arg  is 3");
+        Mockito.when(hackVMParser.getCurrentCommand()).thenReturn("pop static 3");
+        assertEquals(hackVMParser.arg2(), "3", "first is static second arg  is 3");
+
+        Mockito.when(hackVMParser.getCurrentCommand()).thenReturn("push pointer 0");
+        assertEquals(hackVMParser.arg2(), "0", "first is pointer second arg  is 0");
+        Mockito.when(hackVMParser.getCurrentCommand()).thenReturn("pop pointer 0");
+        assertEquals(hackVMParser.arg2(), "0", "first is pointer second arg  is 0");
     }
 
     @Test

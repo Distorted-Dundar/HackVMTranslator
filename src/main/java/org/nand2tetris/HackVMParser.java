@@ -99,6 +99,13 @@ public class HackVMParser implements VMParser {
 
     @Override
     public String arg2() {
+        String[] cmdLexemes = getCurrentCommand().split(" ");
+        switch (commandType()){
+            case C_POP, C_PUSH ->
+            {
+                return cmdLexemes[2];
+            }
+        }
         return null;
     }
 
