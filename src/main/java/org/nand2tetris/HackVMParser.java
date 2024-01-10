@@ -69,13 +69,12 @@ public class HackVMParser implements VMParser {
     @Override
     public Command commandType() {
         String cmd = getCurrentCommand();
-        if(cmd.matches("(.*)(local|that|this|argument|temp|static|pointer)(.*)")){
-            if(cmd.contains("push"))
+        if (cmd.matches("(.*)(local|that|this|argument|temp|static|pointer)(.*)")) {
+            if (cmd.contains("push"))
                 return C_PUSH;
             else
                 return C_POP;
-        }
-        else if (cmd.contains("constant"))
+        } else if (cmd.contains("constant"))
             return CONSTANT;
         else if (cmd.matches("add|sub|neg|eq|gt|lt|and|or|not"))
             return C_ARITHMETIC;
@@ -85,13 +84,15 @@ public class HackVMParser implements VMParser {
 
     @Override
     public String arg1() {
-        switch (commandType()){
+        String[] cmdLexemes = getCurrentCommand().split(" ");
+        switch (commandType()) {
             case C_ARITHMETIC -> {
                 return getCurrentCommand().strip();
             }
-            case C_RETURN -> {
-                throw new UnsupportedOperationException("Cant capture first argument of C_RETURN command Type");
+            case C_PUSH, C_POP -> {
+                return cmdLexemes[1];
             }
+            case C_RETURN -> throw new UnsupportedOperationException("Cant capture first argument of C_RETURN command Type");
         }
         return null;
     }

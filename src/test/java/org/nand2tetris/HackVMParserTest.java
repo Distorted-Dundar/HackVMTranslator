@@ -151,6 +151,44 @@ class HackVMParserTest {
         assertEquals(hackVMParser.arg1(), "not", "returns first arg of not");
     }
 
+
+    @Test
+    void arg1_MemorySegment_commandTypeC_PushOrC_POP() {
+        Mockito.when(hackVMParser.getCurrentCommand()).thenReturn("push local 0");
+        assertEquals(hackVMParser.arg1(), "local", "first arg is local second is 0");
+        Mockito.when(hackVMParser.getCurrentCommand()).thenReturn("pop local 0");
+        assertEquals(hackVMParser.arg1(), "local", "first arg is local second is 0");
+
+        Mockito.when(hackVMParser.getCurrentCommand()).thenReturn("push that 5");
+        assertEquals(hackVMParser.arg1(), "that", "first arg is that second is 5");
+        Mockito.when(hackVMParser.getCurrentCommand()).thenReturn("pop that 5");
+        assertEquals(hackVMParser.arg1(), "that", "first arg is that second is 5");
+
+        Mockito.when(hackVMParser.getCurrentCommand()).thenReturn("push argument 1");
+        assertEquals(hackVMParser.arg1(), "argument", "first arg is argument second is 1");
+        Mockito.when(hackVMParser.getCurrentCommand()).thenReturn("pop argument 1");
+        assertEquals(hackVMParser.arg1(), "argument", "first arg is argument second is 1");
+
+        Mockito.when(hackVMParser.getCurrentCommand()).thenReturn("push this 6");
+        assertEquals(hackVMParser.arg1(), "this", "first arg is this second is 6");
+        Mockito.when(hackVMParser.getCurrentCommand()).thenReturn("pop this 6");
+        assertEquals(hackVMParser.arg1(), "this", "first arg is this second is 6");
+
+        Mockito.when(hackVMParser.getCurrentCommand()).thenReturn("push temp 6");
+        assertEquals(hackVMParser.arg1(), "temp", "first arg is temp second is 6");
+        Mockito.when(hackVMParser.getCurrentCommand()).thenReturn("pop temp 6");
+        assertEquals(hackVMParser.arg1(), "temp", "first arg is temp second is 6");
+
+        Mockito.when(hackVMParser.getCurrentCommand()).thenReturn("push static 3");
+        assertEquals(hackVMParser.arg1(), "static", "first arg is static second is 3");
+        Mockito.when(hackVMParser.getCurrentCommand()).thenReturn("pop static 3");
+        assertEquals(hackVMParser.arg1(), "static", "first arg is static second is 3");
+
+        Mockito.when(hackVMParser.getCurrentCommand()).thenReturn("push pointer 0");
+        assertEquals(hackVMParser.arg1(), "pointer", "first arg is pointer second is 0");
+        Mockito.when(hackVMParser.getCurrentCommand()).thenReturn("pop pointer 0");
+        assertEquals(hackVMParser.arg1(), "pointer", "first arg is pointer second is 0");
+    }
     @Test
     void arg2() {
     }
