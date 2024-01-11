@@ -152,7 +152,6 @@ class HackVMParserTest {
         assertEquals(hackVMParser.arg1(), "not", "returns first arg of not");
     }
 
-
     @Test
     void arg1_MemorySegment_commandTypeC_PushOrC_POP() {
         Mockito.when(hackVMParser.getCurrentCommand()).thenReturn("push local 0");
@@ -237,7 +236,4 @@ class HackVMParserTest {
         assertEquals(hackVMParser.arg2(), "0", "first is pointer second arg  is 0");
     }
 
-    @Test
-    void currentCommand() {
-    }
 }

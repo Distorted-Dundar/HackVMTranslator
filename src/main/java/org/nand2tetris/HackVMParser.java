@@ -72,7 +72,7 @@ public class HackVMParser implements VMParser {
         if (cmd.matches("(.*)(local|that|this|argument|temp|static|pointer)(.*)")) {
             if (cmd.contains("push"))
                 return C_PUSH;
-            else
+            else // POP
                 return C_POP;
         } else if (cmd.contains("constant"))
             return CONSTANT;
@@ -92,7 +92,8 @@ public class HackVMParser implements VMParser {
             case C_PUSH, C_POP -> {
                 return cmdLexemes[1];
             }
-            case C_RETURN -> throw new UnsupportedOperationException("Cant capture first argument of C_RETURN command Type");
+            case C_RETURN ->
+                    throw new UnsupportedOperationException("Cant capture first argument of C_RETURN command Type");
         }
         return null;
     }
