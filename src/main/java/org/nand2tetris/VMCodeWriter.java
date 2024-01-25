@@ -8,7 +8,7 @@ public interface VMCodeWriter {
      * The commands that are realized by this methods
      * are add, sub, neg, and, or , not.
      */
-    String writeArithmetic(String command);
+    String writeArithmetic(String vmCommand);
 
     /**
      * Returns assembly commands that realize
@@ -18,7 +18,7 @@ public interface VMCodeWriter {
      * use goto's. these are for comparison commands
      * e.g. lt,gt,eq
      */
-    String writeArithmetic(String command, int identifier);
+    String writeArithmetic(String vmCommand, int identifier);
 
     /**
      * Returns assembly commands that realize the given
