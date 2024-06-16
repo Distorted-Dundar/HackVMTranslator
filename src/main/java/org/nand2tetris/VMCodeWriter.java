@@ -26,4 +26,17 @@ public interface VMCodeWriter {
      */
     String writePushPop(Command cmdType, String segment, int index);
 
+    /**
+     * Implements a <code>Push constant x</code> command
+     * @param value An integer value as a string
+     * @return The specific command that places the value into the stack
+     */
+    String writeConstant(String value);
+
+    /**
+     * Creates a infinite loop to avoid malware inkjection
+     * @return Writes a ending loop
+     */
+    String writeEndLoop();
+
 }

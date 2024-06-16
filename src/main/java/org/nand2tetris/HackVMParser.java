@@ -92,6 +92,9 @@ public class HackVMParser implements VMParser {
             case C_PUSH, C_POP -> {
                 return cmdLexemes[1];
             }
+            case CONSTANT -> {
+                return cmdLexemes[2];
+            }
             case C_RETURN ->
                     throw new UnsupportedOperationException("Cant capture first argument of C_RETURN command Type");
         }
@@ -101,9 +104,8 @@ public class HackVMParser implements VMParser {
     @Override
     public String arg2() {
         String[] cmdLexemes = getCurrentCommand().split(" ");
-        switch (commandType()){
-            case C_POP, C_PUSH ->
-            {
+        switch (commandType()) {
+            case C_POP, C_PUSH -> {
                 return cmdLexemes[2];
             }
         }

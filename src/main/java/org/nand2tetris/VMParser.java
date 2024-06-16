@@ -33,4 +33,6 @@ public interface VMParser {
      * Should be called only if the current command is <code>C_PUSH, C_POP, C_FUNCTION,</code> or <code>C_CALL.</code>
      */
     String arg2();
+
+    String getCurrentCommand();
 }
